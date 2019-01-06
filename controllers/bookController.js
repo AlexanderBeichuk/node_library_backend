@@ -10,62 +10,62 @@ const router = express.Router();
 router.get(`${endpoints.GET_BOOKS}`, (request, response) => {
    bookModel.getList((error, books) => {
       if (error) {
-         responseModel.setJSON(response, false, `${messages.error.FAILED_LOAD_LIST} ${error}`);
+         responseModel.setJSON(response, 0, `${messages.error.FAILED_LOAD_LIST} ${error}`);
          return;
       }
-      responseModel.setJSON(response, true, messages.success.OK, books, `${entities.BOOK}s`);
+      responseModel.setJSON(response, 1, messages.success.OK, books, `${entities.BOOK}s`);
    });
 });
 
 router.get(`${endpoints.GET_BOOK}`, (request, response, next) => {
    bookModel.getById(request.params.id, (error, book) => {
       if (error) {
-         responseModel.setJSON(response, false, `${messages.error.FAILED_GET} ${error}`);
+         responseModel.setJSON(response, 0, `${messages.error.FAILED_GET} ${error}`);
          return;
       }
-      responseModel.setJSON(response, true, messages.success.OK, book, entities.BOOK);
+      responseModel.setJSON(response, 1, messages.success.OK, book, entities.BOOK);
    })
 });
 
 router.post(`${endpoints.ADD_BOOK}`, (request, response, next) => {
    bookModel.add(request.body,(error, book) => {
       if (error) {
-         responseModel.setJSON(response, false, `${messages.error.FAILED_CREATE} ${error}`);
+         responseModel.setJSON(response, 0, `${messages.error.FAILED_CREATE} ${error}`);
          return;
       }
-      responseModel.setJSON(response, true, messages.success.ADDED, book, entities.BOOK);
+      responseModel.setJSON(response, 1, messages.success.ADDED, book, entities.BOOK);
    });
 });
 
 router.put(`${endpoints.UPDATE_BOOK}`, (request, response, next) => {
    bookModel.updateById(request.params.id, request.body, (error, book) => {
       if (error) {
-         responseModel.setJSON(response, false, `${messages.error.FAILED_UPDATE} ${error}`);
+         responseModel.setJSON(response, 0, `${messages.error.FAILED_UPDATE} ${error}`);
          return;
       }
       else if (book) {
-         responseModel.setJSON(response, true, messages.success.UPDATED, request.body, entities.BOOK);
+         responseModel.setJSON(response, 1, messages.success.UPDATED, request.body, entities.BOOK);
          return;
       }
-      responseModel.setJSON(response, false, messages.error.ERROR);
+      responseModel.setJSON(response, 0, messages.error.ERROR);
    });
 });
 
 router.delete(`${endpoints.DELETE_BOOK}`, (request, response, next) => {
    bookModel.deleteById(request.params.id, (deleteError, book) => {
       if (deleteError) {
-         responseModel.setJSON(response, false, `${messages.error.FAILED_DELETE} ${deleteError}`);
+         responseModel.setJSON(response, 0, `${messages.error.FAILED_DELETE} ${deleteError}`);
          return;
       }
       if (book.result.n === 0) {
-         responseModel.setJSON(response, false, messages.error.NOT_FOUND);
+         responseModel.setJSON(response, 0, messages.error.NOT_FOUND);
          return;
       }
       bookModel.getList((getListError, books) => {
          if (getListError) {
-            responseModel.setJSON(response, false, `${messages.error.FAILED_DELETE} ${getListError}`, books, `${entities.BOOK}s`);
+            responseModel.setJSON(response, 0, `${messages.error.FAILED_DELETE} ${getListError}`, books, `${entities.BOOK}s`);
          }
-         responseModel.setJSON(response, true, messages.success.OK, books, `${entities.BOOK}s`);
+         responseModel.setJSON(response, 1, messages.success.OK, books, `${entities.BOOK}s`);
       });
    });
 });
