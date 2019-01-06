@@ -5,7 +5,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 
 const config = require('./config/database');
-const library = require('./controllers/libraryController');
+const library = require('./controllers/bookController');
 
 mongoose.connect(config.database);
 

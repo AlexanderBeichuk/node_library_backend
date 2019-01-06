@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const entity = require('./entity');
 
 const BookSchema = mongoose.Schema({
    title: {
@@ -13,47 +14,20 @@ const BookSchema = mongoose.Schema({
    }
 });
 
-const Book = mongoose.model('Book', BookSchema);
+const Model = mongoose.model('Book', BookSchema);
 
-const getNewBook = (title, description, category) => {
-   return new Book({
-      title: title,
-      description: description,
-      category: category
+const getNewModel = (model) => {
+   return new Model({
+      title: model.title,
+      description: model.description,
+      category: model.category
    });
 };
 
-const getList = (callback) => {
-   Book.find(callback);
-};
-
-const add = (newBook, callback) => {
-   newBook.save(callback);
-};
-
-const deleteById = (id, callback) => {
-   Book.remove(
-      {
-         _id: id
-      },
-      callback
-   );
-};
-
-const updateById = (id, book, callback) => {
-   Book.findByIdAndUpdate(id, book, callback);
-};
-
-const getById = (id, callback) => {
-   Book.findById(id, callback);
-};
-
 module.exports = {
-   Book: Book,
-   getNewBook: getNewBook,
-   add: add,
-   getList: getList,
-   getById: getById,
-   updateById: updateById,
-   deleteById: deleteById
+   getList: (callback) =>                  { entity.getList(Model, callback) },
+   getById: (id, callback) =>              { entity.getById(Model, id, callback) },
+   add: (newModel, callback) =>            { entity.add(getNewModel(newModel), callback) },
+   updateById: (id, newModel, callback) => { entity.updateById(Model, id, getNewModel(newModel), callback) },
+   deleteById: (id, callback) =>           { entity.deleteById(Model, id, callback) }
 };

@@ -1,26 +1,18 @@
-const getNewResponse = (isSuccess, message, params) => {
+const getNewResponse = (response, isSuccess, message, params, paramKey) => {
    const responseObject = {
       success: isSuccess,
-      message: message
+      message: message ? message : response.statusMessage,
+      status: response.statusCode
    };
-   if (params) {
-      responseObject.params = params;
+   if (params !== undefined) {
+      responseObject[paramKey] = params;
    }
    return responseObject;
 };
 
-const setJSON = (response, isSuccess, message, params) => {
-
-   response.json(getNewResponse(isSuccess, message, params));
-};
-
-const write = (response, isSuccess, message, params) => {
-   response.write(
-      JSON.stringify(getNewResponse(isSuccess, message, params), null, 2)
-   );
-};
-
 module.exports = {
-   setJSON: setJSON,
-   write: write
+   setJSON: (response, isSuccess, message, params, paramsKey) => {
+      response.json(getNewResponse(response, isSuccess, message, params, paramsKey));
+      response.end();
+   }
 };

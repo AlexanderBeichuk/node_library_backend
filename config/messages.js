@@ -6,24 +6,16 @@ const CRUDL = {
 	getList: 'get list'
 };
 
-const entities = {
-	book: 'book'
-};
-
 const capitalizeTextTransform = (text) => {
    return text.charAt(0).toUpperCase() + text.slice(1);
 };
 
 const getFailedMessage = (event) => {
-	return event ? `Failed to ${event}. Error:` : `Error.`;
+	return `Failed to ${event}. Error:`;
 };
 
 const getSuccessMessage = (event) => {
-	return event ? `${capitalizeTextTransform(event)}d successfully.` : `Successfully.`
-};
-
-const getNotFoundMessage = (entity) => {
-	return entity ? capitalizeTextTransform(entity) : 'Could' + ' not found.';
+	return `${capitalizeTextTransform(event)}d successfully`
 };
 
 module.exports = {
@@ -33,13 +25,13 @@ module.exports = {
 		FAILED_DELETE: getFailedMessage(CRUDL.delete),
       FAILED_UPDATE: getFailedMessage(CRUDL.update),
       FAILED_GET: getFailedMessage(CRUDL.get),
-		FAILED: 'Error.',
-		NOT_FOUND_BOOK: getNotFoundMessage(entities.book)
+		NOT_FOUND: 'Could not found',
+      ERROR: 'ERROR'
 	},
 	success: {
 		ADDED: getSuccessMessage(CRUDL.create),
       DELETED: getSuccessMessage(CRUDL.delete),
       UPDATED: getSuccessMessage(CRUDL.update),
-		SUCCESS: 'Success.'
-	}
+      OK: 'OK'
+	},
 };
