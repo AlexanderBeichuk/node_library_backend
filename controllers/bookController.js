@@ -8,6 +8,10 @@ const endpoints = require('../config/endpoints');
 const router = express.Router();
 
 router.get(`${endpoints.GET_BOOKS}`, (request, response) => {
+   if (!request.headers) {
+      responseModel.setJSON(response, 0, messages.error.NOT_AUTHORIZED);
+      return;
+   }
    bookModel.getList((error, books) => {
       if (error) {
          responseModel.setJSON(response, 0, `${messages.error.FAILED_LOAD_LIST} ${error}`);
@@ -28,7 +32,7 @@ router.get(`${endpoints.GET_BOOK}`, (request, response, next) => {
 });
 
 router.post(`${endpoints.ADD_BOOK}`, (request, response, next) => {
-   bookModel.add(request.body,(error, book) => {
+   bookModel.add(request.body, (error, book) => {
       if (error) {
          responseModel.setJSON(response, 0, `${messages.error.FAILED_CREATE} ${error}`);
          return;
@@ -43,11 +47,11 @@ router.put(`${endpoints.UPDATE_BOOK}`, (request, response, next) => {
          responseModel.setJSON(response, 0, `${messages.error.FAILED_UPDATE} ${error}`);
          return;
       }
-      else if (book) {
+      if (book) {
          responseModel.setJSON(response, 1, messages.success.UPDATED, request.body, entities.BOOK);
          return;
       }
-      responseModel.setJSON(response, 0, messages.error.ERROR);
+      responseModel.setJSON(response, 0, messages.error.FAILED);
    });
 });
 

@@ -11,7 +11,7 @@ const capitalizeTextTransform = (text) => {
 };
 
 const getFailedMessage = (event) => {
-	return `Failed to ${event}. Error:`;
+	return `Failed to ${event}`;
 };
 
 const getSuccessMessage = (event) => {
@@ -26,12 +26,14 @@ module.exports = {
       FAILED_UPDATE: getFailedMessage(CRUDL.update),
       FAILED_GET: getFailedMessage(CRUDL.get),
 		NOT_FOUND: 'Could not found',
-      ERROR: 'ERROR'
+      FAILED: 'ERROR',
+		NOT_AUTHORIZED: 'Not authorized'
 	},
 	success: {
 		ADDED: getSuccessMessage(CRUDL.create),
       DELETED: getSuccessMessage(CRUDL.delete),
       UPDATED: getSuccessMessage(CRUDL.update),
+		SIGN_IN: 'Sign in successfully',
       OK: 'OK'
 	},
 };

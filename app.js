@@ -5,7 +5,8 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 
 const config = require('./config/database');
-const library = require('./controllers/bookController');
+const bookController = require('./controllers/bookController');
+const userController = require('./controllers/userController');
 
 mongoose.connect(config.database);
 
@@ -13,24 +14,22 @@ const app = express();
 
 const port = 3000;
 
-app.use(cors());
+app
+   .use(cors())
+   .use(bodyParser.urlencoded({
+	   extended: true
+   }))
+   .use(bodyParser.json())
+   .use(express.static(path.join(__dirname, 'public')))
+   .get('/', (request ,response) => {
+      response.send('Invalid page');
+   })
 
-app.use(bodyParser.urlencoded({
-	extended: true
-}));
+   .use('/mifort_library', bookController)
+   .use('/mifort_library', userController)
 
-app.use(bodyParser.json());
-
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.get('/', (request ,response) => {
-   response.send('Invalid page');
-});
-
-app.use('/mifort_library', library);
-
-app.listen(port, () => {
-   console.log(`Starting the server at port ${port}.`);
-	console.info(`\nlocalhost:${port}/mifort_library\n`);
-});
+   .listen(port, () => {
+      console.log(`Starting the server at port ${port}.`);
+      console.info(`\nlocalhost:${port}/mifort_library\n`);
+   });
 

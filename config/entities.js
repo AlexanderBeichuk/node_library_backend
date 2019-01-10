@@ -1,3 +1,4 @@
 module.exports = {
-   BOOK: 'book'
+   BOOK: 'book',
+   USER: 'user'
 };

@@ -1,3 +1,4 @@
 module.exports = {
 	database: 'mongodb://localhost:27017/mifortlibrary'
 };
+/*Bearer: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFsZXhhbmRlci5iZWljaHVrQGdtYWlsLmNvbSIsImdtYWlsSWQiOiIxMTEiLCJuaWNrbmFtZSI6IkFsZXgiLCJhdmF0YXIiOiJpbWFnZS5wbmciLCJpYXQiOjE1NDY4NjEzODR9.YrF9NJSkZ129gv_1G60rBJmcwk_nSJcua7dNBX025kk*/
